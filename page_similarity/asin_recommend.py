@@ -15,6 +15,7 @@ with db.cursor() as cursor:
 
 app = Flask(__name__)
 
+
 @app.route("/api/get_top_3_similar/<asin>", methods=["GET"])
 def get_top_3_similar(asin):
     """
