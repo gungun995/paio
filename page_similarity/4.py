@@ -1,7 +1,4 @@
-import jellyfish
-import numpy as np
 from database1 import *
-from collections import Counter
 
 # a = []
 # with db1.cursor() as cursor:
@@ -10,5 +7,5 @@ from collections import Counter
 #         log1 = row[0]
 #         a.append(log1)
 
-self_aplus = page_info.select().where(page_info.product_asin == 'B07CQMZ15D').get()
+self_aplus = page_info.select().where(page_info.product_asin == "B07CQMZ15D").get()
 print(eval(self_aplus.aplus))
