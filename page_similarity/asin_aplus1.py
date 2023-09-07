@@ -16,10 +16,12 @@ with db1.cursor() as cursor:
 
 class asin_aplus(Model):
     ASIN = CharField()
+    country_code = CharField()
     Aplus = CharField()
     recommend_Aplus = CharField()
 
     class Meta:
+        primary_key = CompositeKey('ASIN', 'country_code')
         database = db2
         db_table = "dwd_asin_aplus"
 
@@ -70,12 +72,13 @@ for asin in a:
     count = Counter(b)
     most_common = count.most_common(5)
     most_common = [i[0] for i in most_common]
-    # 求出自身A+标签
-    self_aplus = eval(self_aplus.aplus)
+    # 求出自身A+标签和国别信息
+    aplus1 = eval(self_aplus.aplus)
+    countrycode = self_aplus.country_code
     # 页面已有的A+标签不用在推荐列表里面再显示一次
     most_common1 = []
     for i in most_common:
-        if i not in self_aplus:
+        if i not in aplus1:
             most_common1.append(i)
     # 以下为错误操作
     # for i in most_common:
@@ -83,6 +86,9 @@ for asin in a:
     #         most_common.remove(i)
     # 存表
     object = asin_aplus(
-        ASIN=asin, Aplus=str(self_aplus), recommend_Aplus=str(most_common1)
+        ASIN=asin, country_code=countrycode, Aplus=str(aplus1), recommend_Aplus=str(most_common1)
     )
-    object.save()
+    try:
+        object.save(force_insert=True)
+    except IntegrityError :
+        object.save()
