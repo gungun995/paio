@@ -1,5 +1,6 @@
-from page_similarity.database1 import *
+# 用于查看推荐的标签分布情况
 
+from page_similarity.database1 import *
 
 class aplus(Model):
     name = CharField()

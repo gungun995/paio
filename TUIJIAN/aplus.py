@@ -2,7 +2,7 @@ from efficient_apriori import apriori
 from pageinfo import *
 # for i in range(1059, 1270):
 
-c = Aplus.select(Aplus.aplus)
+c = Aplus.select(Aplus.aplus) # 用确实可以用，但这种方法更适合选中多个列，如果只想使用单列只使用Aplus.aplus即可
 # transactions = Aplus.select(Aplus.aplus).limit(1059)
 output = [tuple(eval(e[0])) for e in c.tuples()] # 这种方法挺奇怪的 好像只用这种方式去获取其中的数据
 # print(output[i-1])

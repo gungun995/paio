@@ -9,9 +9,9 @@ a = []
 with db1.cursor() as cursor:
     cursor.execute("SELECT * FROM ods_amazon_page_product_info")
     for row in cursor:
-        log1 = row[0]
-        a.append(log1)
-        string_encoding_dict[row[0]] = row
+        key = row[0]
+        a.append(key)
+        string_encoding_dict[key] = row
 
 
 class asin_aplus(Model):
@@ -47,9 +47,9 @@ for asin1, page1 in string_encoding_dict.items():
     similarity_matrix.append(row)
 
 for asin in a:
-    # 将原表中的aplus数据格式化为列表
-    # aplus = page_info.select(page_info.aplus)
-    self_aplus = Page.select().where(Page.product_asin == asin).get()
+    self_aplus = Page.get(Page.product_asin == asin) #这种写法应该就是使用model类里面的方法了，对应的可以使用countrycode = self_aplus.country_code这种形式获取列
+    # self_aplus = Page.select().where(Page.product_asin == asin).get() 这种写法也行 但看上去好笨 也可简化为
+    # self_aplus = string_encoding_dict[asin]  这种写法是cursor提供的，要用的话是这样：aplus1 = self_aplus[11]
     # print(eval(self_aplus.aplus))
 
     # 输入字符串索引
